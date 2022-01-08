@@ -11,7 +11,7 @@ class BipartiteGraphTest extends TestCase
 {
     public function testIt(): void
     {
-        $graph = new BipartiteGraph(4, 4);
+        $graph = new BipartiteGraph(41, 4);
         $graph->addEdge(1, 2);
         $graph->addEdge(1, 3);
         $graph->addEdge(2, 1);

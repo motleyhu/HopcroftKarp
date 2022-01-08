@@ -60,12 +60,12 @@ class BipartiteGraph
 
         // Keep updating the result while
         // there is an augmenting path.
-        while ($this->bfs()) {
+        while ($this->breadthFirstSearch()) {
             // Find a free vertex
             for ($u = 1; $u <= $this->leftCount; ++$u) {
                 // If current vertex is free and there is
                 // an augmenting path from current vertex
-                if ($this->matchingLeft[$u] == null && $this->dfs($u)) {
+                if ($this->matchingLeft[$u] == null && $this->depthFirstSearch($u)) {
                     ++$result;
                 }
             }
@@ -77,7 +77,7 @@ class BipartiteGraph
 
     // Returns true if there is an augmenting
     // path, else returns false
-    private function bfs(): bool
+    private function breadthFirstSearch(): bool
     {
         // An integer queue
         $Q = [];
@@ -139,7 +139,7 @@ class BipartiteGraph
 
     // Returns true if there is an augmenting
     // path beginning with free vertex u
-    private function dfs(?int $u): bool
+    private function depthFirstSearch(?int $u): bool
     {
         if ($u != null) {
             foreach ($this->edges[$u] as $i) {
@@ -150,7 +150,7 @@ class BipartiteGraph
                 if ($this->dist[$this->matchingRight[$v]] == $this->dist[$u] + 1) {
                     // If dfs for pair of v also returns
                     // true
-                    if ($this->dfs($this->matchingRight[$v]) == true) {
+                    if ($this->depthFirstSearch($this->matchingRight[$v]) == true) {
                         $this->matchingRight[$v] = $u;
                         $this->matchingLeft[$u] = $v;
 
