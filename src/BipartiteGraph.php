@@ -17,21 +17,21 @@ class BipartiteGraph
      * Keyed by left index, values are right indices
      * 0 is used for dummy vertex
      *
-     * @var int[][]
+     * @var array<int, array<int>>
      */
     private array $edges;
 
     /**
      * Edges in matching, keyed by left index, value is right index
      *
-     * @var array<int|null>
+     * @var array<int, int|null>
      */
     private array $matchingLeft = [];
 
     /**
      * Edges in matching, keyed by right index, value is left index
      *
-     * @var array<int|null>
+     * @var array<int, int|null>
      */
     private array $matchingRight = [];
 
@@ -39,7 +39,7 @@ class BipartiteGraph
      * Distance of left vertices
      * dist[u] is one more than dist[u'] if u is next to u' in augmenting path
      *
-     * @var array<int|null>
+     * @var array<int|'', int|null>
      */
     private array $dist;
 
