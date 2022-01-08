@@ -1,5 +1,7 @@
 .idea
 .DS_Store
-/.phpstan-cache/
-/vendor/
 composer.lock
+/vendor/
+/.phpstan-cache/
+/phpunit.xml
+.phpunit.result.cache
