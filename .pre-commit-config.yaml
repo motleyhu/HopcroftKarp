@@ -1,0 +1,34 @@
+fail_fast: true
+repos:
+    - repo: https://github.com/pre-commit/pre-commit-hooks
+      rev: v4.0.1
+      hooks:
+          - id: check-added-large-files
+          - id: check-case-conflict
+          - id: check-executables-have-shebangs
+          - id: check-json
+          - id: check-merge-conflict
+          - id: check-vcs-permalinks
+          - id: check-xml
+          - id: end-of-file-fixer
+          - id: forbid-new-submodules
+          - id: mixed-line-ending
+          - id: trailing-whitespace
+    - repo: local
+      hooks:
+          - id: phplint
+            name: PHP lint
+            language: system
+            entry: php -l
+            files: \.php$
+          - id: ecs
+            name: EasyCodingStandard
+            language: system
+            entry: vendor/bin/ecs check --fix
+            files: \.php$
+          - id: phpstan
+            name: PhpStan src
+            language: system
+            entry: vendor/bin/phpstan analyse -c phpstan.neon --memory-limit=1G --no-progress
+            files: ^(.*\.php|composer.lock)$
+            pass_filenames: false
