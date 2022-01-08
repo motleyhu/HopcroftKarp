@@ -4,7 +4,8 @@
     "type": "library",
     "license": "GPL-3.0-or-later",
     "require": {
-        "php": ">=7.4"
+        "php": ">=7.4",
+        "symfony/polyfill-php80": "^1.24"
     },
     "require-dev": {
         "phpstan/extension-installer": "^1.1",
@@ -14,12 +15,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Motley\\": "src/"
+            "Motley\\HopcroftKarp\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Motley\\Tests\\": "tests/"
+            "Motley\\HopcroftKarp\\Tests\\": "tests/"
         }
     },
     "config": {
