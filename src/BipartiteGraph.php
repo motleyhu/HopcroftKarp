@@ -9,6 +9,9 @@ namespace Motley\HopcroftKarp;
  */
 class BipartiteGraph
 {
+    private const INF = PHP_INT_MAX;
+    private const DUMMY = null;
+
     // The number of vertices on each side
     private int $leftCount;
     private int $rightCount;
@@ -24,14 +27,14 @@ class BipartiteGraph
     /**
      * Edges in matching, keyed by left index, value is right index
      *
-     * @var array<int, int|null>
+     * @var array<int, int|self::DUMMY>
      */
     private array $matchingLeft = [];
 
     /**
      * Edges in matching, keyed by right index, value is left index
      *
-     * @var array<int, int|null>
+     * @var array<int, int|self::DUMMY>
      */
     private array $matchingRight = [];
 
@@ -43,11 +46,11 @@ class BipartiteGraph
      */
     private array $dist;
 
-    public function __construct(int $m, int $n)
+    public function __construct(int $leftCount, int $rightCount)
     {
-        $this->leftCount = $m;
-        $this->rightCount = $n;
-        $this->edges = array_fill(1, $m, []);
+        $this->leftCount = $leftCount;
+        $this->rightCount = $rightCount;
+        $this->edges = array_fill(1, $leftCount, []);
     }
 
     // Returns size of maximum matching
@@ -58,14 +61,12 @@ class BipartiteGraph
 
         $result = 0;
 
-        // Keep updating the result while
-        // there is an augmenting path.
+        // Keep updating the result while there is an augmenting path.
         while ($this->breadthFirstSearch()) {
             // Find a free vertex
-            for ($u = 1; $u <= $this->leftCount; ++$u) {
-                // If current vertex is free and there is
-                // an augmenting path from current vertex
-                if ($this->matchingLeft[$u] == null && $this->depthFirstSearch($u)) {
+            for ($leftVertex = 1; $leftVertex <= $this->leftCount; ++$leftVertex) {
+                // If current vertex is free and there is an augmenting path from current vertex
+                if ($this->matchingLeft[$leftVertex] == null && $this->depthFirstSearch($leftVertex)) {
                     ++$result;
                 }
             }
