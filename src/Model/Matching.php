@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Motley\HopcroftKarp\Model;
 
-use Motley\HopcroftKarp\vertex;
-
 /**
  * The resulting matching
  * TODO: VO for Edges
