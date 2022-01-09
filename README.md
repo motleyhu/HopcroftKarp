@@ -39,3 +39,7 @@ $matching->toArray(); // [['left1', 'right3'], ['left2', 'right1'], ['left3', 'r
 $matching->getRightForLeft('left2'); // 'right1'
 $matching->getRightForLeft('unmatched'); // null
 ```
+
+## Contributions
+
+Issues and pull requests are welcome.
