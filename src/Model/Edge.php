@@ -7,23 +7,24 @@ namespace Motley\HopcroftKarp\Model;
 /**
  * Matching returned using these objects
  *
- * @phpstan-import-type vertex from \Motley\HopcroftKarp\HopcroftKarp
+ * @template TLeftVertex
+ * @template TRightVertex
  */
 class Edge
 {
     /**
-     * @var vertex
+     * @var TLeftVertex
      */
     private $leftVertex;
 
     /**
-     * @var vertex
+     * @var TRightVertex
      */
     private $rightVertex;
 
     /**
-     * @param vertex $leftVertex
-     * @param vertex $rightVertex
+     * @param TLeftVertex  $leftVertex
+     * @param TRightVertex $rightVertex
      */
     public function __construct($leftVertex, $rightVertex)
     {
@@ -32,7 +33,7 @@ class Edge
     }
 
     /**
-     * @return vertex
+     * @return TLeftVertex
      */
     public function getLeftVertex()
     {
@@ -40,7 +41,7 @@ class Edge
     }
 
     /**
-     * @return vertex
+     * @return TRightVertex
      */
     public function getRightVertex()
     {

@@ -7,17 +7,18 @@ namespace Motley\HopcroftKarp\Model;
 /**
  * The resulting matching
  *
- * @phpstan-import-type vertex from \Motley\HopcroftKarp\HopcroftKarp
+ * @template TLeftVertex
+ * @template TRightVertex
  */
 class Matching
 {
     /**
-     * @var Edge[]
+     * @var Edge<TLeftVertex, TRightVertex>[]
      */
     private array $edges;
 
     /**
-     * @param Edge[] $edges
+     * @param Edge<TLeftVertex, TRightVertex>[] $edges
      */
     public function __construct(array $edges)
     {
@@ -25,7 +26,7 @@ class Matching
     }
 
     /**
-     * @return Edge[]
+     * @return Edge<TLeftVertex, TRightVertex>[]
      */
     public function toArray(): array
     {
@@ -33,7 +34,7 @@ class Matching
     }
 
     /**
-     * @return array<vertex>
+     * @return TLeftVertex[]
      */
     public function getAllLeft(): array
     {
@@ -44,7 +45,7 @@ class Matching
     }
 
     /**
-     * @return array<vertex>
+     * @return TRightVertex[]
      */
     public function getAllRight(): array
     {
@@ -55,9 +56,9 @@ class Matching
     }
 
     /**
-     * @param vertex $leftVertex
+     * @param TLeftVertex $leftVertex
      *
-     * @return vertex|null
+     * @return TRightVertex|null
      */
     public function getRightByLeft($leftVertex)
     {
@@ -73,9 +74,9 @@ class Matching
     }
 
     /**
-     * @param vertex $rightVertex
+     * @param TRightVertex $rightVertex
      *
-     * @return vertex|null
+     * @return TLeftVertex|null
      */
     public function getLeftByRight($rightVertex)
     {

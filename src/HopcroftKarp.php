@@ -11,20 +11,23 @@ use Motley\HopcroftKarp\Model\Matching;
 /**
  * Entry point
  *
- * @phpstan-type vertex int|string|object
+ * @template TLeftVertex
+ * @template TRightVertex
  */
 class HopcroftKarp
 {
     /**
-     * @param array<array{vertex, vertex|vertex[]}> $edges array of 2-element arrays of left vertex and right vertex or vertices
+     * @param array<array{TLeftVertex, TRightVertex|TRightVertex[]}> $edges array of 2-element arrays of left vertex and right vertex or vertices
+     *
+     * @return Matching<TLeftVertex, TRightVertex>
      */
     public static function matching(array $edges): Matching
     {
         /** @var array<positive-int, array<positive-int>> $resolvedEdges */
         $resolvedEdges = [];
-        /** @var array<positive-int, vertex> $leftVertices */
+        /** @var array<positive-int, TLeftVertex> $leftVertices */
         $leftVertices = [];
-        /** @var array<positive-int, vertex> $rightVertices */
+        /** @var array<positive-int, TRightVertex> $rightVertices */
         $rightVertices = [];
 
         foreach ($edges as $currentEdges) {
