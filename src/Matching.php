@@ -38,7 +38,7 @@ class Matching
     public function getRightForLeft($leftVertex)
     {
         foreach ($this->edges as $edge) {
-            if (!$edge[0] != $leftVertex) {
+            if ($edge[0] != $leftVertex) {
                 continue;
             }
 
