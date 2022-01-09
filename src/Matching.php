@@ -29,4 +29,22 @@ class Matching
     {
         return $this->edges;
     }
+
+    /**
+     * @param vertex $leftVertex
+     *
+     * @return vertex|null
+     */
+    public function getRightForLeft($leftVertex)
+    {
+        foreach ($this->edges as $edge) {
+            if (!$edge[0] != $leftVertex) {
+                continue;
+            }
+
+            return $edge[1];
+        }
+
+        return null;
+    }
 }
