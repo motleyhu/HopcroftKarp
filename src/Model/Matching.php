@@ -6,7 +6,8 @@ namespace Motley\HopcroftKarp\Model;
 
 /**
  * The resulting matching
- * TODO: VO for Edges
+ *
+ * @phpstan-import-type vertex from \Motley\HopcroftKarp\HopcroftKarp
  */
 class Matching
 {

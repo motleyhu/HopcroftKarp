@@ -10,6 +10,8 @@ use Motley\HopcroftKarp\Model\Matching;
 
 /**
  * Entry point
+ *
+ * @phpstan-type vertex int|string|object
  */
 class HopcroftKarp
 {

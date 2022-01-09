@@ -6,6 +6,8 @@ namespace Motley\HopcroftKarp\Model;
 
 /**
  * Matching returned using these objects
+ *
+ * @phpstan-import-type vertex from \Motley\HopcroftKarp\HopcroftKarp
  */
 class Edge
 {
