@@ -155,13 +155,15 @@ class BipartiteGraph
                 continue;
             }
 
-            // If dfs for pair of v also returns true
-            if ($this->depthFirstSearch($matchedLeftVertex)) {
-                $this->matchingRight[$rightVertex] = $leftVertex;
-                $this->matchingLeft[$leftVertex] = $rightVertex;
-
-                return true;
+            if (!$this->depthFirstSearch($matchedLeftVertex)) {
+                // Skip until dfs also succeeds
+                continue;
             }
+
+            $this->matchingRight[$rightVertex] = $leftVertex;
+            $this->matchingLeft[$leftVertex] = $rightVertex;
+
+            return true;
         }
 
         // There is no augmenting path beginning here
