@@ -133,14 +133,13 @@ class BipartiteGraph
             }
         }
 
-        // If we could come back to NIL using
-        // alternating path of distinct vertices
-        // then there is an augmenting path
+        // If we could come back to null using alternating path of distinct vertices then there is an augmenting path
         return $this->distance[null] != self::INF;
     }
 
-    // Returns true if there is an augmenting
-    // path beginning with free vertex u
+    /**
+     * Returns whether there is an augmenting path beginning with free vertex on left
+     */
     private function depthFirstSearch(?int $leftVertex): bool
     {
         if ($leftVertex == null) {
