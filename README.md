@@ -11,7 +11,9 @@ Or scheduling appointments for a set of time slots when each person is only avai
 
 ## The Implementation
 
-This is a quick and lazy implementation for now which works well for my use case. I am more than happy to improve it further as and when there is a need for that. Issues and pull requests are welcome.
+- This is a quick and lazy implementation for now which works well for my use case.
+- I am more than happy to improve it further as and when there is a need for that. Issues and pull requests are welcome.
+- As per semver, there is no BC guarantee until 1.0
 
 ## Installation
 
