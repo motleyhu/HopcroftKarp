@@ -115,20 +115,21 @@ class BipartiteGraph
         while (!empty($queue)) {
             $leftVertex = array_shift($queue);
 
-            // If this node is not null and can provide a shorter path to null
-            if ($this->distance[$leftVertex] < $this->distance[null]) {
-                // Get all adjacent vertices of the dequeued vertex
-                foreach ($this->edges[$leftVertex] as $rightVertex) {
-                    // If pair of v is not considered
-                    // so far (v, pairV[V]) is not yet
-                    // explored edge.
-                    if ($this->distance[$this->matchingRight[$rightVertex]] == self::INF) {
-                        // Consider the pair and add
-                        // it to queue
-                        $this->distance[$this->matchingRight[$rightVertex]] = $this->distance[$leftVertex] + 1;
-                        array_push($queue, $this->matchingRight[$rightVertex]);
-                    }
+            if ($this->distance[$leftVertex] >= $this->distance[null]) {
+                // Skip if this node cannot provide a shorter path
+                continue;
+            }
+
+            // Get all adjacent vertices of the dequeued vertex
+            foreach ($this->edges[$leftVertex] as $rightVertex) {
+                if ($this->distance[$this->matchingRight[$rightVertex]] !== self::INF) {
+                    // Skip if already been considered
+                    continue;
                 }
+
+                // Consider the pair and add it to queue
+                $this->distance[$this->matchingRight[$rightVertex]] = $this->distance[$leftVertex] + 1;
+                array_push($queue, $this->matchingRight[$rightVertex]);
             }
         }
 
