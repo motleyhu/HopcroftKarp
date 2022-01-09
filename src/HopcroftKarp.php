@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Motley\HopcroftKarp;
 
 use LogicException;
+use Motley\HopcroftKarp\Model\Edge;
+use Motley\HopcroftKarp\Model\Matching;
 
 /**
  * Entry point
@@ -13,8 +15,6 @@ class HopcroftKarp
 {
     /**
      * @param array<array{vertex, vertex|vertex[]}> $edges array of 2-element arrays of left vertex and right vertex or vertices
-     *
-     * @return \Motley\HopcroftKarp\Matching
      */
     public static function matching(array $edges): Matching
     {
@@ -60,10 +60,7 @@ class HopcroftKarp
         $edgesByIndex = (new BipartiteGraph($resolvedEdges))->hopcroftKarp();
         $edgesWithValues = [];
         foreach ($edgesByIndex as $leftIndex => $rightIndex) {
-            $edgesWithValues[] = [
-                $leftVertices[$leftIndex],
-                $rightVertices[$rightIndex],
-            ];
+            $edgesWithValues[] = new Edge($leftVertices[$leftIndex], $rightVertices[$rightIndex]);
         }
 
         return new Matching($edgesWithValues);

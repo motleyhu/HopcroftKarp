@@ -2,20 +2,23 @@
 
 declare(strict_types=1);
 
-namespace Motley\HopcroftKarp;
+namespace Motley\HopcroftKarp\Model;
+
+use Motley\HopcroftKarp\vertex;
 
 /**
  * The resulting matching
+ * TODO: VO for Edges
  */
 class Matching
 {
     /**
-     * @var array<array{vertex, vertex}>
+     * @var Edge[]
      */
     private array $edges;
 
     /**
-     * @param array<array{vertex, vertex}> $edges
+     * @param Edge[] $edges
      */
     public function __construct(array $edges)
     {
@@ -23,7 +26,7 @@ class Matching
     }
 
     /**
-     * @return array<array{vertex, vertex}>
+     * @return Edge[]
      */
     public function toArray(): array
     {
@@ -36,7 +39,7 @@ class Matching
     public function getAllLeft(): array
     {
         return array_map(
-            fn (array $edge) => $edge[0],
+            fn (Edge $edge) => $edge->getLeftVertex(),
             $this->edges
         );
     }
@@ -47,7 +50,7 @@ class Matching
     public function getAllRight(): array
     {
         return array_map(
-            fn (array $edge) => $edge[1],
+            fn (Edge $edge) => $edge->getRightVertex(),
             $this->edges
         );
     }
@@ -60,11 +63,11 @@ class Matching
     public function getRightByLeft($leftVertex)
     {
         foreach ($this->edges as $edge) {
-            if ($edge[0] != $leftVertex) {
+            if ($edge->getLeftVertex() != $leftVertex) {
                 continue;
             }
 
-            return $edge[1];
+            return $edge->getRightVertex();
         }
 
         return null;
@@ -78,11 +81,11 @@ class Matching
     public function getLeftByRight($rightVertex)
     {
         foreach ($this->edges as $edge) {
-            if ($edge[1] != $rightVertex) {
+            if ($edge->getRightVertex() != $rightVertex) {
                 continue;
             }
 
-            return $edge[0];
+            return $edge->getLeftVertex();
         }
 
         return null;
