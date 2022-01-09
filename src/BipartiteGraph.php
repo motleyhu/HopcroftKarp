@@ -147,13 +147,16 @@ class BipartiteGraph
         }
 
         foreach ($this->edges[$leftVertex] as $rightVertex) {
+            $matchedLeftVertex = $this->matchingRight[$rightVertex];
+
             // Follow the distances set by BFS
-            if ($this->distance[$this->matchingRight[$rightVertex]] !== $this->distance[$leftVertex] + 1) {
+            if ($this->distance[$matchedLeftVertex] !== $this->distance[$leftVertex] + 1) {
+                // Skip until finding consecutive edges
                 continue;
             }
 
             // If dfs for pair of v also returns true
-            if ($this->depthFirstSearch($this->matchingRight[$rightVertex])) {
+            if ($this->depthFirstSearch($matchedLeftVertex)) {
                 $this->matchingRight[$rightVertex] = $leftVertex;
                 $this->matchingLeft[$leftVertex] = $rightVertex;
 
