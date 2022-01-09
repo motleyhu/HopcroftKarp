@@ -142,28 +142,27 @@ class BipartiteGraph
     // path beginning with free vertex u
     private function depthFirstSearch(?int $leftVertex): bool
     {
-        if ($leftVertex != null) {
-            foreach ($this->edges[$leftVertex] as $rightVertex) {
-                // Follow the distances set by BFS
-                if ($this->distance[$this->matchingRight[$rightVertex]] == $this->distance[$leftVertex] + 1) {
-                    // If dfs for pair of v also returns
-                    // true
-                    if ($this->depthFirstSearch($this->matchingRight[$rightVertex]) == true) {
-                        $this->matchingRight[$rightVertex] = $leftVertex;
-                        $this->matchingLeft[$leftVertex] = $rightVertex;
-
-                        return true;
-                    }
-                }
-            }
-
-            // If there is no augmenting path
-            // beginning with u.
-            $this->distance[$leftVertex] = self::INF;
-
-            return false;
+        if ($leftVertex == null) {
+            return true;
         }
 
-        return true;
+        foreach ($this->edges[$leftVertex] as $rightVertex) {
+            // Follow the distances set by BFS
+            if ($this->distance[$this->matchingRight[$rightVertex]] == $this->distance[$leftVertex] + 1) {
+                // If dfs for pair of v also returns true
+                if ($this->depthFirstSearch($this->matchingRight[$rightVertex])) {
+                    $this->matchingRight[$rightVertex] = $leftVertex;
+                    $this->matchingLeft[$leftVertex] = $rightVertex;
+
+                    return true;
+                }
+            }
+        }
+
+        // If there is no augmenting path
+        // beginning with u.
+        $this->distance[$leftVertex] = self::INF;
+
+        return false;
     }
 }
