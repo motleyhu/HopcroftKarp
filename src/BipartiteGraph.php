@@ -39,9 +39,9 @@ class BipartiteGraph
 
     /**
      * Distance of left vertices
-     * dist[u] is one more than dist[u'] if u is next to u' in augmenting path
+     * distance[u] is one more than distance[u'] if u is next to u' in augmenting path
      *
-     * @var array<int|'', int|null>
+     * @var array<int|'', int>
      */
     private array $distance;
 
