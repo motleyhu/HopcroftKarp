@@ -11,7 +11,9 @@ Or scheduling appointments for a set of time slots when each person is only avai
 
 ## The Implementation
 
-This is a quick and lazy implementation for now which works well for my use case. I am more than happy to improve it further as and when there is a need for that. Issues and pull requests are welcome.
+- This is a quick and lazy implementation for now which works well for my use case.
+- I am more than happy to improve it further as and when there is a need for that. Issues and pull requests are welcome.
+- As per semver, there is no BC guarantee until 1.0
 
 ## Installation
 
@@ -36,8 +38,12 @@ The resulting matching object has a few helper methods to inspect it.
 
 ```php
 $matching->toArray(); // [['left1', 'right3'], ['left2', 'right1'], ['left3', 'right2'], ['left4', 'right4']]
-$matching->getRightForLeft('left2'); // 'right1'
-$matching->getRightForLeft('unmatched'); // null
+$matching->getRightByLeft('left2'); // 'right1'
+$matching->getRightByLeft('unmatched'); // null
+$matching->getLeftByRight('right2'); // 'left3'
+$matching->getAllLeft(); // ['left1', 'left2', 'left3', 'left4']
+$matching->getAllRight(); // ['right3', 'right1', 'right2', 'right4']
+
 ```
 
 ## Contributions
