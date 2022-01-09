@@ -19,7 +19,8 @@ class BipartiteGraphTest extends TestCase
         $graph->addEdge(4, 2);
         $graph->addEdge(4, 4);
 
-        $x = $graph->hopcroftKarp();
-        var_dump($x);
+        $matchingSize = $graph->hopcroftKarp();
+
+        self::assertSame(4, $matchingSize);
     }
 }

@@ -156,7 +156,7 @@ class BipartiteGraph
             }
 
             if (!$this->depthFirstSearch($matchedLeftVertex)) {
-                // Skip until dfs also succeeds
+                // Skip until dfs for pair of right also succeeds
                 continue;
             }
 
