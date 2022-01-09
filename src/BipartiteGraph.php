@@ -53,8 +53,8 @@ final class BipartiteGraph
      */
     public function __construct(array $edges)
     {
-        $this->leftCount = max(array_keys($edges)) ?: 0;
-        $this->rightCount = max(array_merge(...array_values($edges))) ?: 0;
+        $this->leftCount = $edges ? max(array_keys($edges)) : 0;
+        $this->rightCount = max(array_merge([0], ...array_values($edges)));
         $this->edges = $edges;
     }
 

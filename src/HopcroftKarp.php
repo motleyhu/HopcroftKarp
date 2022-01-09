@@ -65,6 +65,10 @@ class HopcroftKarp
         $edgesByIndex = (new BipartiteGraph($resolvedEdges))->hopcroftKarp();
         $edgesWithValues = [];
         foreach ($edgesByIndex as $leftIndex => $rightIndex) {
+            if ($rightIndex === null) {
+                continue;
+            }
+
             $edgesWithValues[] = new Edge($leftVertices[$leftIndex], $rightVertices[$rightIndex]);
         }
 
