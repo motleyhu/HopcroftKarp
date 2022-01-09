@@ -35,7 +35,7 @@ class Matching
      *
      * @return vertex|null
      */
-    public function getRightForLeft($leftVertex)
+    public function getRightByLeft($leftVertex)
     {
         foreach ($this->edges as $edge) {
             if ($edge[0] != $leftVertex) {
@@ -43,6 +43,24 @@ class Matching
             }
 
             return $edge[1];
+        }
+
+        return null;
+    }
+
+    /**
+     * @param vertex $rightVertex
+     *
+     * @return vertex|null
+     */
+    public function getLeftByRight($rightVertex)
+    {
+        foreach ($this->edges as $edge) {
+            if ($edge[1] != $rightVertex) {
+                continue;
+            }
+
+            return $edge[0];
         }
 
         return null;

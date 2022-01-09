@@ -36,8 +36,9 @@ The resulting matching object has a few helper methods to inspect it.
 
 ```php
 $matching->toArray(); // [['left1', 'right3'], ['left2', 'right1'], ['left3', 'right2'], ['left4', 'right4']]
-$matching->getRightForLeft('left2'); // 'right1'
-$matching->getRightForLeft('unmatched'); // null
+$matching->getRightByLeft('left2'); // 'right1'
+$matching->getRightByLeft('unmatched'); // null
+$matching->getLeftByRight('right2'); // 'left3'
 ```
 
 ## Contributions

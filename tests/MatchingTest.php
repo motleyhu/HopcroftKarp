@@ -13,8 +13,9 @@ class MatchingTest extends TestCase
     {
         $matching = new Matching([['left1', 'right3'], ['left2', 'right1'], ['left3', 'right2'], ['left4', 'right4']]);
 
-        self::assertSame('right1', $matching->getRightForLeft('left2'));
-        self::assertSame('right2', $matching->getRightForLeft('left3'));
-        self::assertNull($matching->getRightForLeft('unmatched'));
+        self::assertSame('right1', $matching->getRightByLeft('left2'));
+        self::assertSame('right2', $matching->getRightByLeft('left3'));
+        self::assertNull($matching->getRightByLeft('unmatched'));
+        self::assertSame('left3', $matching->getLeftByRight('right2'));
     }
 }
