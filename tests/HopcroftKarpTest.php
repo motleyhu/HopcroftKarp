@@ -27,4 +27,39 @@ class HopcroftKarpTest extends TestCase
             new Edge('left4', 'right4'),
         ], $matching->toArray());
     }
+
+    public function testMatchingEmpty(): void
+    {
+        $matching = HopcroftKarp::matching([
+            ['left1', ['right2', 'right3']],
+            ['left2', 'right1'],
+            ['left3', ['right2']],
+            ['left4', ['right2']],
+            ['left4', 'right4'],
+        ]);
+
+        self::assertEquals([
+            new Edge('left1', 'right3'),
+            new Edge('left2', 'right1'),
+            new Edge('left3', 'right2'),
+            new Edge('left4', 'right4'),
+        ], $matching->toArray());
+    }
+
+    public function testMatchingEmptyRight(): void
+    {
+        $matching = HopcroftKarp::matching([
+            ['left1', ['right2', 'right3']],
+            ['left2', 'right1'],
+            ['left3', []],
+            ['left4', ['right2']],
+            ['left4', 'right4'],
+        ]);
+
+        self::assertEquals([
+            new Edge('left1', 'right2'),
+            new Edge('left2', 'right1'),
+            new Edge('left4', 'right4'),
+        ], $matching->toArray());
+    }
 }
