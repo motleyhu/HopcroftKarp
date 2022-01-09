@@ -148,14 +148,16 @@ class BipartiteGraph
 
         foreach ($this->edges[$leftVertex] as $rightVertex) {
             // Follow the distances set by BFS
-            if ($this->distance[$this->matchingRight[$rightVertex]] == $this->distance[$leftVertex] + 1) {
-                // If dfs for pair of v also returns true
-                if ($this->depthFirstSearch($this->matchingRight[$rightVertex])) {
-                    $this->matchingRight[$rightVertex] = $leftVertex;
-                    $this->matchingLeft[$leftVertex] = $rightVertex;
+            if ($this->distance[$this->matchingRight[$rightVertex]] !== $this->distance[$leftVertex] + 1) {
+                continue;
+            }
 
-                    return true;
-                }
+            // If dfs for pair of v also returns true
+            if ($this->depthFirstSearch($this->matchingRight[$rightVertex])) {
+                $this->matchingRight[$rightVertex] = $leftVertex;
+                $this->matchingLeft[$leftVertex] = $rightVertex;
+
+                return true;
             }
         }
 
