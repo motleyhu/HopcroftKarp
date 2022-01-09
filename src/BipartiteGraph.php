@@ -43,7 +43,7 @@ class BipartiteGraph
      *
      * @var array<int|'', int|null>
      */
-    private array $dist;
+    private array $distance;
 
     public function __construct(int $leftCount, int $rightCount)
     {
@@ -89,56 +89,45 @@ class BipartiteGraph
         return $matchingSize;
     }
 
-    // Returns true if there is an augmenting
-    // path, else returns false
+    /**
+     * Returns whether there is an augmenting path
+     */
     private function breadthFirstSearch(): bool
     {
-        // An integer queue
         $queue = [];
 
         // First layer of vertices (set distance as 0)
         for ($leftVertex = 1; $leftVertex <= $this->leftCount; ++$leftVertex) {
-            // If this is a free vertex,
-            // add it to queue
+            // If this is a free vertex, add it to queue
             if ($this->matchingLeft[$leftVertex] == null) {
-                // u is not matched
-                $this->dist[$leftVertex] = 0;
+                // This vertex is not matched
+                $this->distance[$leftVertex] = 0;
                 array_push($queue, $leftVertex);
-            }
-
-            // Else set distance as infinite
-            // so that this vertex is
-            // considered next time
-            else {
-                $this->dist[$leftVertex] = self::INF;
+            } else {
+                // Else set distance as infinite so that this vertex is considered next time
+                $this->distance[$leftVertex] = self::INF;
             }
         }
 
-        // Initialize distance to
-        // NIL as infinite
-        $this->dist[null] = self::INF;
+        $this->distance[null] = self::INF;
 
-        // Q is going to contain vertices
-        // of left side only.
+        // Queue is going to contain vertices of left side only.
         while (!empty($queue)) {
-            // Dequeue a vertex
             $leftVertex = array_shift($queue);
 
-            // If this node is not NIL and
-            // can provide a shorter path to NIL
-            if ($this->dist[$leftVertex] < $this->dist[null]) {
-                // Get all adjacent vertices of
-                // the dequeued vertex u
-                foreach ($this->edges[$leftVertex] as $i) {
-                    $rightVertex = $i;
+            // If this node is not null and can provide a shorter path to null
+            if ($this->distance[$leftVertex] < $this->distance[null]) {
+                // Get all adjacent vertices of the dequeued vertex
+                foreach ($this->edges[$leftVertex] as $adjacentRightVertex) {
+                    $rightVertex = $adjacentRightVertex;
 
                     // If pair of v is not considered
                     // so far (v, pairV[V]) is not yet
                     // explored edge.
-                    if ($this->dist[$this->matchingRight[$rightVertex]] == self::INF) {
+                    if ($this->distance[$this->matchingRight[$rightVertex]] == self::INF) {
                         // Consider the pair and add
                         // it to queue
-                        $this->dist[$this->matchingRight[$rightVertex]] = $this->dist[$leftVertex] + 1;
+                        $this->distance[$this->matchingRight[$rightVertex]] = $this->distance[$leftVertex] + 1;
                         array_push($queue, $this->matchingRight[$rightVertex]);
                     }
                 }
@@ -148,7 +137,7 @@ class BipartiteGraph
         // If we could come back to NIL using
         // alternating path of distinct vertices
         // then there is an augmenting path
-        return $this->dist[null] != self::INF;
+        return $this->distance[null] != self::INF;
     }
 
     // Returns true if there is an augmenting
@@ -161,7 +150,7 @@ class BipartiteGraph
                 $rightVertex = $i;
 
                 // Follow the distances set by BFS
-                if ($this->dist[$this->matchingRight[$rightVertex]] == $this->dist[$leftVertex] + 1) {
+                if ($this->distance[$this->matchingRight[$rightVertex]] == $this->distance[$leftVertex] + 1) {
                     // If dfs for pair of v also returns
                     // true
                     if ($this->depthFirstSearch($this->matchingRight[$rightVertex]) == true) {
@@ -175,7 +164,7 @@ class BipartiteGraph
 
             // If there is no augmenting path
             // beginning with u.
-            $this->dist[$leftVertex] = self::INF;
+            $this->distance[$leftVertex] = self::INF;
 
             return false;
         }
