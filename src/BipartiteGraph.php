@@ -10,7 +10,6 @@ namespace Motley\HopcroftKarp;
 class BipartiteGraph
 {
     private const INF = PHP_INT_MAX;
-    private const DUMMY = null;
 
     // The number of vertices on each side
     private int $leftCount;
@@ -27,14 +26,14 @@ class BipartiteGraph
     /**
      * Edges in matching, keyed by left index, value is right index
      *
-     * @var array<int, int|self::DUMMY>
+     * @var array<int, int|null>
      */
     private array $matchingLeft = [];
 
     /**
      * Edges in matching, keyed by right index, value is left index
      *
-     * @var array<int, int|self::DUMMY>
+     * @var array<int, int|null>
      */
     private array $matchingRight = [];
 
@@ -97,13 +96,13 @@ class BipartiteGraph
             // so that this vertex is
             // considered next time
             else {
-                $this->dist[$u] = PHP_INT_MAX;
+                $this->dist[$u] = self::INF;
             }
         }
 
         // Initialize distance to
         // NIL as infinite
-        $this->dist[null] = PHP_INT_MAX;
+        $this->dist[null] = self::INF;
 
         // Q is going to contain vertices
         // of left side only.
@@ -122,7 +121,7 @@ class BipartiteGraph
                     // If pair of v is not considered
                     // so far (v, pairV[V]) is not yet
                     // explored edge.
-                    if ($this->dist[$this->matchingRight[$v]] == PHP_INT_MAX) {
+                    if ($this->dist[$this->matchingRight[$v]] == self::INF) {
                         // Consider the pair and add
                         // it to queue
                         $this->dist[$this->matchingRight[$v]] = $this->dist[$u] + 1;
@@ -135,7 +134,7 @@ class BipartiteGraph
         // If we could come back to NIL using
         // alternating path of distinct vertices
         // then there is an augmenting path
-        return $this->dist[null] != PHP_INT_MAX;
+        return $this->dist[null] != self::INF;
     }
 
     // Returns true if there is an augmenting
@@ -162,7 +161,7 @@ class BipartiteGraph
 
             // If there is no augmenting path
             // beginning with u.
-            $this->dist[$u] = PHP_INT_MAX;
+            $this->dist[$u] = self::INF;
 
             return false;
         }
