@@ -118,9 +118,7 @@ class BipartiteGraph
             // If this node is not null and can provide a shorter path to null
             if ($this->distance[$leftVertex] < $this->distance[null]) {
                 // Get all adjacent vertices of the dequeued vertex
-                foreach ($this->edges[$leftVertex] as $adjacentRightVertex) {
-                    $rightVertex = $adjacentRightVertex;
-
+                foreach ($this->edges[$leftVertex] as $rightVertex) {
                     // If pair of v is not considered
                     // so far (v, pairV[V]) is not yet
                     // explored edge.
@@ -145,10 +143,7 @@ class BipartiteGraph
     private function depthFirstSearch(?int $leftVertex): bool
     {
         if ($leftVertex != null) {
-            foreach ($this->edges[$leftVertex] as $i) {
-                // Adjacent to u
-                $rightVertex = $i;
-
+            foreach ($this->edges[$leftVertex] as $rightVertex) {
                 // Follow the distances set by BFS
                 if ($this->distance[$this->matchingRight[$rightVertex]] == $this->distance[$leftVertex] + 1) {
                     // If dfs for pair of v also returns
