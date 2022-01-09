@@ -161,8 +161,7 @@ class BipartiteGraph
             }
         }
 
-        // If there is no augmenting path
-        // beginning with u.
+        // There is no augmenting path beginning here
         $this->distance[$leftVertex] = self::INF;
 
         return false;
