@@ -6,8 +6,9 @@ namespace Motley\HopcroftKarp;
 
 /**
  * Bipartite Graph providing Hopcroft-Karp algo
+ * This is the inner, low-level code for performance. Use it via HopcroftKarp to be more fancy
  */
-class BipartiteGraph
+final class BipartiteGraph
 {
     private const INF = PHP_INT_MAX;
 
@@ -45,22 +46,20 @@ class BipartiteGraph
      */
     private array $distance;
 
-    public function __construct(int $leftCount, int $rightCount)
+    /**
+     * @param array<int, array<int>> $edges Keys are left vertex indices, values are array of right vertex indices
+     */
+    public function __construct(array $edges)
     {
-        $this->leftCount = $leftCount;
-        $this->rightCount = $rightCount;
-        $this->edges = array_fill(1, $leftCount, []);
-    }
-
-    public function addEdge(int $leftVertex, int $rightVertex): void
-    {
-        $this->edges[$leftVertex][] = $rightVertex;
+        $this->leftCount = max(array_keys($edges)) ?: 0;
+        $this->rightCount = max(array_merge(...array_values($edges))) ?: 0;
+        $this->edges = $edges;
     }
 
     /**
-     * Returns size of maximum matching
+     * @return array<int, int|null>
      */
-    public function hopcroftKarp(): int
+    public function hopcroftKarp(): array
     {
         $this->matchingLeft = array_fill(1, $this->leftCount, null);
         $this->matchingRight = array_fill(1, $this->rightCount, null);
@@ -85,8 +84,7 @@ class BipartiteGraph
             }
         }
 
-        // TODO: The actual matching is in pairU/V
-        return $matchingSize;
+        return $this->matchingLeft;
     }
 
     /**

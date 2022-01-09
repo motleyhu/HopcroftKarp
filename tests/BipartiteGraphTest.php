@@ -11,16 +11,20 @@ class BipartiteGraphTest extends TestCase
 {
     public function testIt(): void
     {
-        $graph = new BipartiteGraph(41, 4);
-        $graph->addEdge(1, 2);
-        $graph->addEdge(1, 3);
-        $graph->addEdge(2, 1);
-        $graph->addEdge(3, 2);
-        $graph->addEdge(4, 2);
-        $graph->addEdge(4, 4);
+        $graph = new BipartiteGraph([
+            1 => [2, 3],
+            2 => [1],
+            3 => [2],
+            4 => [2, 4],
+        ]);
 
-        $matchingSize = $graph->hopcroftKarp();
+        $matching = $graph->hopcroftKarp();
 
-        self::assertSame(4, $matchingSize);
+        self::assertSame([
+            1 => 3,
+            2 => 1,
+            3 => 2,
+            4 => 4,
+        ], $matching);
     }
 }
