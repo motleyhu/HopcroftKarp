@@ -6,8 +6,11 @@ namespace Motley\HopcroftKarp;
 
 /**
  * Bipartite Graph providing Hopcroft-Karp algo
+ * This is the inner, low-level code for performance.
+ *
+ * @internal Use it via HopcroftKarp, preferably
  */
-class BipartiteGraph
+final class BipartiteGraph
 {
     private const INF = PHP_INT_MAX;
 
@@ -19,21 +22,21 @@ class BipartiteGraph
      * Keyed by left index, values are right indices
      * 0 is used for dummy vertex
      *
-     * @var array<int, array<int>>
+     * @var array<positive-int, array<positive-int>>
      */
     private array $edges;
 
     /**
      * Edges in matching, keyed by left index, value is right index
      *
-     * @var array<int, int|null>
+     * @var array<positive-int, positive-int|null>
      */
     private array $matchingLeft = [];
 
     /**
      * Edges in matching, keyed by right index, value is left index
      *
-     * @var array<int, int|null>
+     * @var array<positive-int, positive-int|null>
      */
     private array $matchingRight = [];
 
@@ -45,24 +48,24 @@ class BipartiteGraph
      */
     private array $distance;
 
-    public function __construct(int $leftCount, int $rightCount)
+    /**
+     * @param array<positive-int, array<positive-int>> $edges Keys are left vertex indices, values are array of right vertex indices
+     */
+    public function __construct(array $edges)
     {
-        $this->leftCount = $leftCount;
-        $this->rightCount = $rightCount;
-        $this->edges = array_fill(1, $leftCount, []);
-    }
-
-    public function addEdge(int $leftVertex, int $rightVertex): void
-    {
-        $this->edges[$leftVertex][] = $rightVertex;
+        $this->leftCount = max(array_keys($edges)) ?: 0;
+        $this->rightCount = max(array_merge(...array_values($edges))) ?: 0;
+        $this->edges = $edges;
     }
 
     /**
-     * Returns size of maximum matching
+     * @return array<int, int|null>
      */
-    public function hopcroftKarp(): int
+    public function hopcroftKarp(): array
     {
+        // @phpstan-ignore-next-line Stan is wrong here
         $this->matchingLeft = array_fill(1, $this->leftCount, null);
+        // @phpstan-ignore-next-line Stan is wrong here
         $this->matchingRight = array_fill(1, $this->rightCount, null);
 
         $matchingSize = 0;
@@ -71,6 +74,7 @@ class BipartiteGraph
         while ($this->breadthFirstSearch()) {
             // Find a free vertex
             for ($leftVertex = 1; $leftVertex <= $this->leftCount; ++$leftVertex) {
+                /** @var positive-int $leftVertex */
                 if ($this->matchingLeft[$leftVertex] != null) {
                     // Not a free vertex
                     continue;
@@ -85,8 +89,7 @@ class BipartiteGraph
             }
         }
 
-        // TODO: The actual matching is in pairU/V
-        return $matchingSize;
+        return $this->matchingLeft;
     }
 
     /**
@@ -138,7 +141,8 @@ class BipartiteGraph
     }
 
     /**
-     * Returns whether there is an augmenting path beginning with free vertex on left
+     * @param positive-int|null $leftVertex
+     *                                      Returns whether there is an augmenting path beginning with free vertex on left
      */
     private function depthFirstSearch(?int $leftVertex): bool
     {

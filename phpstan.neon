@@ -1,6 +1,8 @@
 includes:
 	- vendor/phpstan/phpstan/conf/bleedingEdge.neon
 parameters:
+    typeAliases:
+        vertex: int|string|object
     tmpDir: .phpstan-cache
     resultCachePath: %tmpDir%/resultCache-src.php
     level: max
