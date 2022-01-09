@@ -17,5 +17,7 @@ class MatchingTest extends TestCase
         self::assertSame('right2', $matching->getRightByLeft('left3'));
         self::assertNull($matching->getRightByLeft('unmatched'));
         self::assertSame('left3', $matching->getLeftByRight('right2'));
+        self::assertSame(['left1', 'left2', 'left3', 'left4'], $matching->getAllLeft());
+        self::assertSame(['right3', 'right1', 'right2', 'right4'], $matching->getAllRight());
     }
 }

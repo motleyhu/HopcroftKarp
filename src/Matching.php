@@ -31,6 +31,28 @@ class Matching
     }
 
     /**
+     * @return array<vertex>
+     */
+    public function getAllLeft(): array
+    {
+        return array_map(
+            fn (array $edge) => $edge[0],
+            $this->edges
+        );
+    }
+
+    /**
+     * @return array<vertex>
+     */
+    public function getAllRight(): array
+    {
+        return array_map(
+            fn (array $edge) => $edge[1],
+            $this->edges
+        );
+    }
+
+    /**
      * @param vertex $leftVertex
      *
      * @return vertex|null
