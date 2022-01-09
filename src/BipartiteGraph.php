@@ -57,27 +57,36 @@ class BipartiteGraph
         $this->edges[$leftVertex][] = $rightVertex;
     }
 
-    // Returns size of maximum matching
+    /**
+     * Returns size of maximum matching
+     */
     public function hopcroftKarp(): int
     {
         $this->matchingLeft = array_fill(1, $this->leftCount, null);
         $this->matchingRight = array_fill(1, $this->rightCount, null);
 
-        $result = 0;
+        $matchingSize = 0;
 
         // Keep updating the result while there is an augmenting path.
         while ($this->breadthFirstSearch()) {
             // Find a free vertex
             for ($leftVertex = 1; $leftVertex <= $this->leftCount; ++$leftVertex) {
-                // If current vertex is free and there is an augmenting path from current vertex
-                if ($this->matchingLeft[$leftVertex] == null && $this->depthFirstSearch($leftVertex)) {
-                    ++$result;
+                if ($this->matchingLeft[$leftVertex] != null) {
+                    // Not a free vertex
+                    continue;
                 }
+
+                if (!$this->depthFirstSearch($leftVertex)) {
+                    // There is no augmenting path from current vertex
+                    continue;
+                }
+
+                ++$matchingSize;
             }
         }
 
         // TODO: The actual matching is in pairU/V
-        return $result;
+        return $matchingSize;
     }
 
     // Returns true if there is an augmenting
