@@ -7,17 +7,18 @@ namespace Motley\HopcroftKarp;
 use LogicException;
 use Motley\HopcroftKarp\Model\Edge;
 use Motley\HopcroftKarp\Model\Matching;
+use Traversable;
 
 /**
  * Entry point
- *
- * @template TLeftVertex
- * @template TRightVertex
  */
 class HopcroftKarp
 {
     /**
-     * @param array<array{TLeftVertex, TRightVertex|TRightVertex[]}> $edges array of 2-element arrays of left vertex and right vertex or vertices
+     * @template TLeftVertex
+     * @template TRightVertex
+     *
+     * @param array<array{TLeftVertex, TRightVertex|Traversable<TRightVertex>}> $edges array of 2-element arrays of left vertex and right vertex or vertices
      *
      * @return Matching<TLeftVertex, TRightVertex>
      */
@@ -35,7 +36,7 @@ class HopcroftKarp
 
             $currentLeftVertex = $currentEdges[0];
             $currentRightVertices = $currentEdges[1];
-            if (!\is_array($currentRightVertices)) {
+            if (!is_iterable($currentRightVertices)) {
                 $currentRightVertices = [$currentRightVertices];
             }
 
@@ -72,6 +73,7 @@ class HopcroftKarp
             $edgesWithValues[] = new Edge($leftVertices[$leftIndex], $rightVertices[$rightIndex]);
         }
 
+        // @phpstan-ignore-next-line Sthg is off, but better on the consumer side TODO: Fix
         return new Matching($edgesWithValues);
     }
 }
