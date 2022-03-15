@@ -64,6 +64,7 @@ class HopcroftKarp
         }
 
         $edgesByIndex = (new BipartiteGraph($resolvedEdges))->hopcroftKarp();
+        /** @var Edge<TLeftVertex, TRightVertex>[] $edgesWithValues */
         $edgesWithValues = [];
         foreach ($edgesByIndex as $leftIndex => $rightIndex) {
             if ($rightIndex === null) {
@@ -73,7 +74,6 @@ class HopcroftKarp
             $edgesWithValues[] = new Edge($leftVertices[$leftIndex], $rightVertices[$rightIndex]);
         }
 
-        // @phpstan-ignore-next-line Sthg is off, but better on the consumer side TODO: Fix
         return new Matching($edgesWithValues);
     }
 }
