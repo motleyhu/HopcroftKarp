@@ -7,38 +7,29 @@ namespace Motley\HopcroftKarp;
 use LogicException;
 use Motley\HopcroftKarp\Model\Edge;
 use Motley\HopcroftKarp\Model\Matching;
-use Traversable;
 
 /**
  * Entry point
+ *
+ * @template TLeftVertex of object|string|int
+ * @template TRightVertex of object|string|int
  */
 class HopcroftKarp
 {
     /**
-     * @template TLeftVertex
-     * @template TRightVertex
-     *
-     * @param array<array{TLeftVertex, TRightVertex|Traversable<TRightVertex>}> $edges array of 2-element arrays of left vertex and right vertex or vertices
+     * @param array<array{TLeftVertex, iterable<TRightVertex>}> $edges array of 2-element arrays of left vertex and right vertex or vertices
      *
      * @return Matching<TLeftVertex, TRightVertex>
      */
-    public static function matching(array $edges): Matching
+    public function match(array $edges): Matching
     {
         /** @var array<positive-int, array<positive-int>> $resolvedEdges */
         $resolvedEdges = [];
-        /** @var array<positive-int, TLeftVertex> $leftVertices */
         $leftVertices = [];
-        /** @var array<positive-int, TRightVertex> $rightVertices */
         $rightVertices = [];
 
         foreach ($edges as $currentEdges) {
-            $currentEdges = array_values($currentEdges);
-
-            $currentLeftVertex = $currentEdges[0];
-            $currentRightVertices = $currentEdges[1];
-            if (!is_iterable($currentRightVertices)) {
-                $currentRightVertices = [$currentRightVertices];
-            }
+            [$currentLeftVertex, $currentRightVertices] = array_values($currentEdges);
 
             if (!\in_array($currentLeftVertex, $leftVertices)) {
                 $leftVertices[\count($leftVertices) + 1] = $currentLeftVertex;
@@ -73,7 +64,6 @@ class HopcroftKarp
             $edgesWithValues[] = new Edge($leftVertices[$leftIndex], $rightVertices[$rightIndex]);
         }
 
-        // @phpstan-ignore-next-line Sthg is off, but better on the consumer side TODO: Fix
         return new Matching($edgesWithValues);
     }
 }
