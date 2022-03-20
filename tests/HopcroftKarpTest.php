@@ -10,14 +10,26 @@ use PHPUnit\Framework\TestCase;
 
 class HopcroftKarpTest extends TestCase
 {
+    /**
+     * @var HopcroftKarp<string, string>
+     */
+    private HopcroftKarp $service;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $this->service = new HopcroftKarp();
+    }
+
     public function testMatching(): void
     {
-        $matching = HopcroftKarp::matching([
+        $matching = $this->service->match([
             ['left1', ['right2', 'right3']],
-            ['left2', 'right1'],
+            ['left2', ['right1']],
             ['left3', ['right2']],
             ['left4', ['right2']],
-            ['left4', 'right4'],
+            ['left4', ['right4']],
         ]);
 
         self::assertEquals([
@@ -30,12 +42,12 @@ class HopcroftKarpTest extends TestCase
 
     public function testMatchingEmpty(): void
     {
-        $matching = HopcroftKarp::matching([
+        $matching = $this->service->match([
             ['left1', ['right2', 'right3']],
-            ['left2', 'right1'],
+            ['left2', ['right1']],
             ['left3', ['right2']],
             ['left4', ['right2']],
-            ['left4', 'right4'],
+            ['left4', ['right4']],
         ]);
 
         self::assertEquals([
@@ -48,12 +60,12 @@ class HopcroftKarpTest extends TestCase
 
     public function testMatchingEmptyRight(): void
     {
-        $matching = HopcroftKarp::matching([
+        $matching = $this->service->match([
             ['left1', ['right2', 'right3']],
-            ['left2', 'right1'],
+            ['left2', ['right1']],
             ['left3', []],
             ['left4', ['right2']],
-            ['left4', 'right4'],
+            ['left4', ['right4']],
         ]);
 
         self::assertEquals([
