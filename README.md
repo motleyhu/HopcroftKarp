@@ -23,15 +23,15 @@ composer require motley/hopcroft-karp
 
 ## Usage
 
-You have to provide a set of edges describing your biparite graph. The vertex values can be object, string or int. The edge can be one to one or one to many, or a combination of those. Example:
+You have to provide a set of edges describing your biparite graph. The vertex values can be object, string or int. The edge shall be one to many. Example:
 
 ```php
     $matching = HopcroftKarp::matching([
         ['left1', ['right2', 'right3']],
-        ['left2', 'right1'],
+        ['left2', ['right1']],
         ['left3', ['right2']],
         ['left4', ['right2']],
-        ['left4', 'right4'],
+        ['left4', ['right4']],
     ]);
 ```
 The resulting matching object has a few helper methods to inspect it.
