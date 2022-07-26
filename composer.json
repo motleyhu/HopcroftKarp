@@ -9,9 +9,9 @@
     },
     "require-dev": {
         "phpstan/extension-installer": "^1.1.0",
-        "phpstan/phpstan": "^1.4.10",
-        "phpunit/phpunit": "^9.5.19",
-        "symplify/easy-coding-standard": "^10.1.4"
+        "phpstan/phpstan": "^1.8.2",
+        "phpunit/phpunit": "^9.5.21",
+        "symplify/easy-coding-standard": "^11.0.8"
     },
     "autoload": {
         "psr-4": {
