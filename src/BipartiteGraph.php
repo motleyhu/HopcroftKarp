@@ -14,8 +14,14 @@ final class BipartiteGraph
 {
     private const INF = PHP_INT_MAX;
 
-    // The number of vertices on each side
+    /**
+     * @var int<0, max> The number of vertices on left side
+     */
     private int $leftCount;
+
+    /**
+     * @var int<0, max> The number of vertices on right side
+     */
     private int $rightCount;
 
     /**
@@ -63,9 +69,9 @@ final class BipartiteGraph
      */
     public function hopcroftKarp(): array
     {
-        // @phpstan-ignore-next-line Stan is wrong here
+        // @phpstan-ignore-next-line
         $this->matchingLeft = array_fill(1, $this->leftCount, null);
-        // @phpstan-ignore-next-line Stan is wrong here
+        // @phpstan-ignore-next-line
         $this->matchingRight = array_fill(1, $this->rightCount, null);
 
         $matchingSize = 0;
@@ -74,8 +80,8 @@ final class BipartiteGraph
         while ($this->breadthFirstSearch()) {
             // Find a free vertex
             for ($leftVertex = 1; $leftVertex <= $this->leftCount; ++$leftVertex) {
-                /** @var positive-int $leftVertex */
-                if ($this->matchingLeft[$leftVertex] != null) {
+                // @phpstan-ignore-next-line
+                if ($this->matchingLeft[$leftVertex] !== null) {
                     // Not a free vertex
                     continue;
                 }
