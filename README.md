@@ -4,7 +4,7 @@ PHP implementation of the Hopcroft-Karp algorithm
 
 ## The Algorithm
 
-The (Hopcroft–Karp algorithm)[https://en.wikipedia.org/wiki/Hopcroft%E2%80%93Karp_algorithm] is the most efficient way to find a maximum cardinality matching in a bipartite graph.
+The [Hopcroft–Karp algorithm](https://en.wikipedia.org/wiki/Hopcroft%E2%80%93Karp_algorithm) is the most efficient way to find a maximum cardinality matching in a bipartite graph.
 
 Think of applicants for jobs, each applicant has skills for a certain sub-set of the jobs, and we need to employ the maximum number of applicants to jobs.
 Or scheduling appointments for a set of time slots when each person is only available at specific time slots.
