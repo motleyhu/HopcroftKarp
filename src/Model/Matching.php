@@ -38,10 +38,7 @@ class Matching
      */
     public function getAllLeft(): array
     {
-        return array_map(
-            fn (Edge $edge) => $edge->getLeftVertex(),
-            $this->edges
-        );
+        return array_map(static fn (Edge $edge) => $edge->getLeftVertex(), $this->edges);
     }
 
     /**
@@ -49,10 +46,7 @@ class Matching
      */
     public function getAllRight(): array
     {
-        return array_map(
-            fn (Edge $edge) => $edge->getRightVertex(),
-            $this->edges
-        );
+        return array_map(static fn (Edge $edge) => $edge->getRightVertex(), $this->edges);
     }
 
     /**
