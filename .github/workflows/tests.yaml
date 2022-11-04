@@ -30,7 +30,7 @@ jobs:
                   tools: composer:v2
 
             - name: composer
-              uses: ramsey/composer-install@2.1.1
+              uses: ramsey/composer-install@2.2.0
               with:
                   composer-options: "--prefer-dist ${{ matrix.install-args }}"
 
