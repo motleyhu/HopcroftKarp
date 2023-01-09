@@ -39,7 +39,7 @@ jobs:
                   vendor/bin/phpunit
 
             - name: phpstan-cache
-              uses: actions/cache@v3.2.2
+              uses: actions/cache@v3.2.3
               with:
                   key: phpstan-${{ github.ref }}-${{ github.sha }}
                   path: .phpstan-cache
