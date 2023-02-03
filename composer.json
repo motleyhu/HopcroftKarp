@@ -10,7 +10,7 @@
     "require-dev": {
         "phpstan/extension-installer": "^1.2.0",
         "phpstan/phpstan": "^1.8.11",
-        "phpunit/phpunit": "^9.5.26",
+        "phpunit/phpunit": "^10.0.0",
         "motley/ecs-config": "^1.10"
     },
     "autoload": {
