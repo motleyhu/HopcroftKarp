@@ -8,6 +8,9 @@ use Motley\HopcroftKarp\Model\Edge;
 use Motley\HopcroftKarp\Model\Matching;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * MatchingTest
+ */
 class MatchingTest extends TestCase
 {
     public function testGetRightForLeft(): void

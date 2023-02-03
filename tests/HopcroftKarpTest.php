@@ -8,6 +8,9 @@ use Motley\HopcroftKarp\HopcroftKarp;
 use Motley\HopcroftKarp\Model\Edge;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * HopcroftKarpTest
+ */
 class HopcroftKarpTest extends TestCase
 {
     /**

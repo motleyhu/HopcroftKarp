@@ -7,8 +7,8 @@ namespace Motley\HopcroftKarp\Model;
 /**
  * The resulting matching
  *
- * @template TLeftVertex
- * @template TRightVertex
+ * @template TLeftVertex of object|string|int
+ * @template TRightVertex of object|string|int
  */
 class Matching
 {
@@ -54,7 +54,7 @@ class Matching
      *
      * @return TRightVertex|null
      */
-    public function getRightByLeft($leftVertex)
+    public function getRightByLeft($leftVertex): object|string|int|null
     {
         foreach ($this->edges as $edge) {
             if ($edge->getLeftVertex() != $leftVertex) {
@@ -72,7 +72,7 @@ class Matching
      *
      * @return TLeftVertex|null
      */
-    public function getLeftByRight($rightVertex)
+    public function getLeftByRight($rightVertex): object|string|int|null
     {
         foreach ($this->edges as $edge) {
             if ($edge->getRightVertex() != $rightVertex) {

@@ -7,20 +7,20 @@ namespace Motley\HopcroftKarp\Model;
 /**
  * Matching returned using these objects
  *
- * @template TLeftVertex
- * @template TRightVertex
+ * @template TLeftVertex of object|string|int
+ * @template TRightVertex of object|string|int
  */
 class Edge
 {
     /**
      * @var TLeftVertex
      */
-    private $leftVertex;
+    private object|string|int $leftVertex;
 
     /**
      * @var TRightVertex
      */
-    private $rightVertex;
+    private object|string|int $rightVertex;
 
     /**
      * @param TLeftVertex  $leftVertex

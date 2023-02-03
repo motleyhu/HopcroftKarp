@@ -148,7 +148,7 @@ final class BipartiteGraph
 
     /**
      * @param positive-int|null $leftVertex
-     *                                      Returns whether there is an augmenting path beginning with free vertex on left
+     * Returns whether there is an augmenting path beginning with free vertex on left
      */
     private function depthFirstSearch(?int $leftVertex): bool
     {
