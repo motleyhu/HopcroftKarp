@@ -4,4 +4,4 @@ composer.lock
 /vendor/
 /.phpstan-cache/
 /phpunit.xml
-.phpunit.result.cache
+.phpunit.cache
