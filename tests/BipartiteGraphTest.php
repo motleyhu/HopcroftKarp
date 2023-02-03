@@ -7,6 +7,9 @@ namespace Motley\HopcroftKarp\Tests;
 use Motley\HopcroftKarp\BipartiteGraph;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * BipartiteGraphTest
+ */
 class BipartiteGraphTest extends TestCase
 {
     public function testHopcroftKarp(): void
