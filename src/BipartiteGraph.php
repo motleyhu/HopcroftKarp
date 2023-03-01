@@ -80,7 +80,6 @@ final class BipartiteGraph
         while ($this->breadthFirstSearch()) {
             // Find a free vertex
             for ($leftVertex = 1; $leftVertex <= $this->leftCount; ++$leftVertex) {
-                // @phpstan-ignore-next-line
                 if ($this->matchingLeft[$leftVertex] !== null) {
                     // Not a free vertex
                     continue;
