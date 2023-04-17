@@ -13,22 +13,31 @@ use PHPUnit\Framework\TestCase;
 class BipartiteGraphTest extends TestCase
 {
     /**
-     * @return iterable<string, array<BipartiteGraph|mixed[]>>
+     * @dataProvider hopcroftKarpDataProvider
+     * @param mixed[] $expected
+     * @param array<int<1, max>, array<int<1, max>>> $data
      */
-    public function hopcroftKarpDataProvider(): iterable
+    public function testHopcroftKarp(array $data, array $expected): void
     {
-        yield 'empty' => [
-            new BipartiteGraph([]),
-            [],
-        ];
+        $graph = new BipartiteGraph($data);
+
+        self::assertSame($expected, $graph->hopcroftKarp());
+    }
+
+    /**
+     * @return iterable<string, array<positive-int, array<positive-int>>|mixed[]>
+     */
+    public static function hopcroftKarpDataProvider(): iterable
+    {
+        yield 'empty' => [[], []];
 
         yield 'simple' => [
-            new BipartiteGraph([
+            [
                 1 => [2, 3],
                 2 => [1],
                 3 => [2],
                 4 => [2, 4],
-            ]),
+            ],
             [
                 1 => 3,
                 2 => 1,
@@ -37,8 +46,8 @@ class BipartiteGraphTest extends TestCase
             ],
         ];
 
-        yield 'complex & imperfect matching' => [
-            new BipartiteGraph([
+        yield 'complex with imperfect matching' => [
+            [
                 1 => [5, 6],
                 2 => [7, 8],
                 3 => [9, 10],
@@ -50,7 +59,7 @@ class BipartiteGraphTest extends TestCase
                 9 => [3],
                 10 => [3],
                 11 => [4],
-            ]),
+            ],
             [
                 1 => 5,
                 2 => 7,
@@ -67,59 +76,50 @@ class BipartiteGraphTest extends TestCase
         ];
 
         yield 'empty right side' => [
-            new BipartiteGraph([
+            [
                 1 => [2, 3],
                 2 => [],
                 3 => [2],
                 4 => [2, 4],
-            ]),
+            ],
             [
                 1 => 3,
                 2 => null,
                 3 => 2,
                 4 => 4,
-            ]
+            ],
         ];
 
         yield 'more vertices on the right side' => [
-            new BipartiteGraph([
+            [
                 1 => [1, 3],
                 2 => [3],
                 3 => [2, 4],
                 4 => [1, 4, 5],
-            ]),
+            ],
             [
                 1 => 1,
                 2 => 3,
                 3 => 2,
                 4 => 4,
-            ]
+            ],
         ];
 
         yield 'more vertices on the left side' => [
-            new BipartiteGraph([
+            [
                 1 => [1, 4],
                 2 => [3],
                 3 => [1, 2],
                 4 => [3, 4],
                 5 => [4],
-            ]),
+            ],
             [
                 1 => 1,
                 2 => 3,
                 3 => 2,
                 4 => 4,
                 5 => null,
-            ]
+            ],
         ];
-    }
-
-    /**
-     * @dataProvider hopcroftKarpDataProvider
-     * @param mixed[] $expected
-     */
-    public function testHopcroftKarp(BipartiteGraph $graph, array $expected): void
-    {
-        self::assertSame($expected, $graph->hopcroftKarp());
     }
 }
