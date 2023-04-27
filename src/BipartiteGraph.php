@@ -75,10 +75,10 @@ final class BipartiteGraph
         // @phpstan-ignore-next-line
         $this->matchingRight = array_fill(1, $this->rightCount, null);
 
-        foreach ($previousMatching as $key => $value) {
-            if ($value !== null && \in_array($value, $this->edges[$key])) {
-                $this->matchingLeft[$key] = $value;
-                $this->matchingRight[$value] = $key;
+        foreach ($previousMatching as $left => $right) {
+            if ($right !== null && \in_array($right, $this->edges[$left])) {
+                $this->matchingLeft[$left] = $right;
+                $this->matchingRight[$right] = $left;
             }
         }
 
