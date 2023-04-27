@@ -110,6 +110,7 @@ final class BipartiteGraph
      */
     private function breadthFirstSearch(): bool
     {
+        /** @var int[] $queue */
         $queue = [];
 
         // First layer of vertices (set distance as 0)
