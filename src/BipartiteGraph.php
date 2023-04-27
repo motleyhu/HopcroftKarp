@@ -65,14 +65,22 @@ final class BipartiteGraph
     }
 
     /**
+     * @param array<positive-int, positive-int|null> $previousMatching
      * @return array<int, int|null>
      */
-    public function hopcroftKarp(): array
+    public function hopcroftKarp(array $previousMatching = []): array
     {
         // @phpstan-ignore-next-line
         $this->matchingLeft = array_fill(1, $this->leftCount, null);
         // @phpstan-ignore-next-line
         $this->matchingRight = array_fill(1, $this->rightCount, null);
+
+        foreach ($previousMatching as $key => $value) {
+            if ($value !== null && \in_array($value, $this->edges[$key])) {
+                $this->matchingLeft[$key] = $value;
+                $this->matchingRight[$value] = $key;
+            }
+        }
 
         $matchingSize = 0;
 
