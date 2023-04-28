@@ -13,23 +13,24 @@ use PHPUnit\Framework\TestCase;
 class BipartiteGraphTest extends TestCase
 {
     /**
-     * @dataProvider hopcroftKarpDataProvider
+     * @dataProvider dataProvider
+     * @param array<positive-int, array<positive-int>> $data
+     * @param array<positive-int, positive-int|null> $previousMatching
      * @param mixed[] $expected
-     * @param array<int<1, max>, array<int<1, max>>> $data
      */
-    public function testHopcroftKarp(array $data, array $expected): void
+    public function testHopcroftKarp(array $data, array $previousMatching, array $expected): void
     {
         $graph = new BipartiteGraph($data);
 
-        self::assertSame($expected, $graph->hopcroftKarp());
+        self::assertSame($expected, $graph->hopcroftKarp($previousMatching));
     }
 
     /**
      * @return iterable<string, array<positive-int, array<positive-int>>|mixed[]>
      */
-    public static function hopcroftKarpDataProvider(): iterable
+    public static function dataProvider(): iterable
     {
-        yield 'empty' => [[], []];
+        yield 'empty' => [[], [], []];
 
         yield 'simple' => [
             [
@@ -37,7 +38,7 @@ class BipartiteGraphTest extends TestCase
                 2 => [1],
                 3 => [2],
                 4 => [2, 4],
-            ],
+            ], [],
             [
                 1 => 3,
                 2 => 1,
@@ -59,7 +60,7 @@ class BipartiteGraphTest extends TestCase
                 9 => [3],
                 10 => [3],
                 11 => [4],
-            ],
+            ], [],
             [
                 1 => 5,
                 2 => 7,
@@ -81,7 +82,7 @@ class BipartiteGraphTest extends TestCase
                 2 => [],
                 3 => [2],
                 4 => [2, 4],
-            ],
+            ], [],
             [
                 1 => 3,
                 2 => null,
@@ -96,7 +97,7 @@ class BipartiteGraphTest extends TestCase
                 2 => [3],
                 3 => [2, 4],
                 4 => [1, 4, 5],
-            ],
+            ], [],
             [
                 1 => 1,
                 2 => 3,
@@ -112,7 +113,7 @@ class BipartiteGraphTest extends TestCase
                 3 => [1, 2],
                 4 => [3, 4],
                 5 => [4],
-            ],
+            ], [],
             [
                 1 => 1,
                 2 => 3,
@@ -121,53 +122,83 @@ class BipartiteGraphTest extends TestCase
                 5 => null,
             ],
         ];
-    }
 
-    public function testFreezingEdges(): void
-    {
-        $previousMatching = [
-            1 => 3,
-            2 => 1,
-            3 => 2,
-            4 => 4,
+        yield 'complete freezing edges' => [
+            [
+                1 => [1, 2, 3, 4],
+                2 => [1, 2, 3, 4],
+                3 => [1, 2, 3, 4],
+                4 => [1, 2, 3, 4],
+            ],
+            [
+                1 => 3,
+                2 => 1,
+                3 => 2,
+                4 => 4,
+            ],
+            [
+                1 => 3,
+                2 => 1,
+                3 => 2,
+                4 => 4,
+            ],
         ];
 
-        $graph = new BipartiteGraph([
-            1 => [1, 2, 4],
-            2 => [1, 2, 3, 4],
-            3 => [1, 3, 4],
-            4 => [1, 2, 3, 4],
-        ]);
-
-        $this->assertSame([
-            1 => 2,
-            2 => 1,
-            3 => 3,
-            4 => 4,
-        ], $graph->hopcroftKarp($previousMatching));
-    }
-
-    public function testFreezingEdges(): void
-    {
-        $previousMatching = [
-            1 => 3,
-            2 => 1,
-            3 => 2,
-            4 => 4,
+        yield 'partial freezing edges' => [
+            [
+                1 => [1, 2, 3],
+                2 => [1, 2, 3, 4],
+                3 => [2, 3, 4],
+                4 => [1, 2, 3, 4],
+            ],
+            [
+                1 => 4,
+                2 => 2,
+                3 => 1,
+                4 => 3,
+            ],
+            [
+                1 => 1,
+                2 => 2,
+                3 => 4,
+                4 => 3,
+            ],
         ];
 
-        $graph = new BipartiteGraph([
-            1 => [1, 2, 4],
-            2 => [1, 2, 3, 4],
-            3 => [1, 3, 4],
-            4 => [1, 2, 3, 4],
-        ]);
+        yield 'no overlap with previous matching' => [
+            [
+                1 => [1, 2],
+                2 => [2, 3],
+                3 => [3, 4],
+                4 => [1],
+            ],
+            [
+                1 => 3,
+                2 => 1,
+                3 => 2,
+                4 => 4,
+            ],
+            [
+                1 => 2,
+                2 => 3,
+                3 => 4,
+                4 => 1,
+            ],
+        ];
 
-        $this->assertSame([
-            1 => 2,
-            2 => 1,
-            3 => 3,
-            4 => 4,
-        ], $graph->hopcroftKarp($previousMatching));
+        yield 'ignore previous matching if necessary to achieve maximum matching' => [
+            [
+                1 => [1, 2],
+                2 => [1],
+            ],
+            [
+                1 => 1,
+                2 => 2,
+            ],
+            [
+                1 => 2,
+                2 => 1,
+            ],
+        ];
     }
 }
