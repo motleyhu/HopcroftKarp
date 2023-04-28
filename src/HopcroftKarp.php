@@ -18,10 +18,11 @@ class HopcroftKarp
 {
     /**
      * @param array<array{TLeftVertex, iterable<TRightVertex>}> $edges array of 2-element arrays of left vertex and right vertex or vertices
+     * @param Matching<TLeftVertex, TRightVertex>|null $previousMatching
      *
      * @return Matching<TLeftVertex, TRightVertex>
      */
-    public function match(array $edges): Matching
+    public function match(array $edges, ?Matching $previousMatching = null): Matching
     {
         /** @var array<positive-int, array<positive-int>> $resolvedEdges */
         $resolvedEdges = [];
@@ -54,7 +55,19 @@ class HopcroftKarp
             }
         }
 
-        $edgesByIndex = (new BipartiteGraph($resolvedEdges))->hopcroftKarp();
+        // Resolve edges from previous matching
+        $resolvedPreviousMatchingEdges = [];
+        foreach ($previousMatching?->toArray() ?: [] as $edge) {
+            $left = $edge->getLeftVertex();
+            $right = $edge->getRightVertex();
+
+            if ($leftIndex = array_search($left, $leftVertices)) {
+                $rightIndex = array_search($right, $rightVertices) ?: null;
+                $resolvedPreviousMatchingEdges[$leftIndex] = $rightIndex;
+            }
+        }
+
+        $edgesByIndex = (new BipartiteGraph($resolvedEdges))->hopcroftKarp($resolvedPreviousMatchingEdges);
         $edgesWithValues = [];
         foreach ($edgesByIndex as $leftIndex => $rightIndex) {
             if ($rightIndex === null) {
