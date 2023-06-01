@@ -46,6 +46,25 @@ $matching->getAllRight(); // ['right3', 'right1', 'right2', 'right4']
 
 ```
 
+## Freezing edges
+You can pass in a previous matching as an optional argument and the algorithm will try to keep as many edges from it as possible. Example:
+
+```php
+$previousMatching = new Matching([
+    new Edge('left1', 'right1'),
+    new Edge('left2', 'right2'),
+    new Edge('left3', 'right4'),
+    new Edge('left4', 'right3'),
+]);
+
+$matching = HopcroftKarp::matching([
+    ['left1', ['right1', 'left2', 'right3']],
+    ['left2', ['right1', 'left2', 'right3', 'right4']],
+    ['left3', ['left2', 'right3', 'right4']],
+    ['left4', ['right1', 'right2', 'right3', 'right4']],
+], $previousMatching);
+```
+
 ## Contributions
 
 Issues and pull requests are welcome.
