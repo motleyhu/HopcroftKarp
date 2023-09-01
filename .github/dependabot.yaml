@@ -10,6 +10,7 @@ updates:
           separator: "-"
     - package-ecosystem: composer
       directory: /
+      versioning-strategy: increase
       allow:
           - dependency-type: all
       schedule:
