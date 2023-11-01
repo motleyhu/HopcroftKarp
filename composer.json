@@ -10,7 +10,7 @@
         "phpstan/extension-installer": "^1.3",
         "phpstan/phpstan": "^1.10",
         "phpunit/phpunit": "^10.3",
-        "motley/ecs-config": "^2.0",
+        "motley/ecs-config": "^2.1",
         "symfony/var-dumper": "^6.3"
     },
     "autoload": {
