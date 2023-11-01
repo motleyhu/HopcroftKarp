@@ -8,6 +8,7 @@ updates:
           interval: monthly
       pull-request-branch-name:
           separator: "-"
+      reviewers: [TamasSzigeti]
     - package-ecosystem: composer
       directory: /
       versioning-strategy: increase
@@ -17,3 +18,4 @@ updates:
           interval: monthly
       pull-request-branch-name:
           separator: "-"
+      reviewers: [TamasSzigeti]
