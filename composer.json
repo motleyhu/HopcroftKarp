@@ -11,7 +11,7 @@
         "phpstan/phpstan": "^1.10",
         "phpunit/phpunit": "^10.4",
         "motley/ecs-config": "^2.1",
-        "symfony/var-dumper": "^6.3"
+        "symfony/var-dumper": "^6.4"
     },
     "autoload": {
         "psr-4": {
