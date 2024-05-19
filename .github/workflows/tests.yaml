@@ -16,14 +16,14 @@ jobs:
         strategy:
             matrix:
                 install-args: ['', '--prefer-lowest']
-                php-version: ['8.1', '8.2']
+                php-version: ['8.1', '8.2', '8.3']
             fail-fast: false
         steps:
             - name: checkout
               uses: actions/checkout@v4
 
             - name: php
-              uses: shivammathur/setup-php@2.30.4
+              uses: shivammathur/setup-php@v2
               with:
                   php-version: "${{ matrix.php-version }}"
                   tools: composer:v2
@@ -38,7 +38,7 @@ jobs:
                   vendor/bin/phpunit
 
             - name: phpstan-cache
-              uses: actions/cache@v4.0.2
+              uses: actions/cache@v4
               with:
                   key: phpstan-${{ github.ref }}-${{ github.sha }}
                   path: .phpstan-cache
