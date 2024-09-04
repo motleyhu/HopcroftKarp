@@ -8,7 +8,7 @@
     },
     "require-dev": {
         "phpstan/extension-installer": "^1.4",
-        "phpstan/phpstan": "^1.11",
+        "phpstan/phpstan": "^1.12",
         "phpunit/phpunit": "^10.5",
         "motley/ecs-config": "^2.1",
         "symfony/var-dumper": "^6.4"
